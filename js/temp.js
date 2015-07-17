@@ -9,7 +9,6 @@ $(function() {
 	//the item they are creating
 	var thisColor = 'white';
 	var colorWheel = ['red', 'yellow', 'green', 'white'];
-	var count;
 
 	//hide the color selector until user focuses on the text input
 	//to create a new item
@@ -60,21 +59,35 @@ $(function() {
 	//item and delete it. when delete mode is off, clicking on list items will
 	//change its color
 
+//	$('#deleteMode').on('click', function() {
+//		if(deleteMode === 0) {
+//			deleteMode = 1;
+//			$('#deleteMode').removeClass('buttonOff');
+//			$('#deleteMode').addClass('buttonOn');
+//		}else {
+//			$('#deleteMode').removeClass('buttonOn');
+//			$('#deleteMode').addClass('buttonOff');
+//			deleteMode = 0;
+//		};
+//		alert($('#deleteMode').className);
+//	});
+
 	$('#deleteMode').on('click', function() {
 		$(this).toggleClass('on');
 	});
+
+
 
 	//changes color of list item or deletes it based on deleteMode on/off
 	$('ul').on('click', 'li', function() {
 
 		if($('#deleteMode').hasClass('on')) {
 			$(this).remove();
-			count = $('li').length;
-
 			//recount the list items and update their id attr
+			var count = 0;
 			$('li').each(function() {
-				$(this).attr('id', 'li' + count);
-				count--;
+				$('this').attr('id', 'li' + count);
+				count++;
 			});
 
 		} else {

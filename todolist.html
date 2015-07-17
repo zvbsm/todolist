@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>To Do List</title>
+		<link href="css/todolist.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="logo">
+				<h1>To do list</h1>
+			</div>
+			<form id="controls">
+				<input type="text" id="inputLabel" placeholder="Label it"/>
+				<button id="addNew" href="#">Add New</button>
+			</form>
+			<div id="selectColor">
+				<p id="colorText">Apply color: </p>
+				<p id="thisColorText"></p><br>
+					<button class="color" id="red"/>
+					<button class="color" id="yellow"/>
+					<button class="color" id="green"/>
+					<button class="color" id="white"/>
+			</div>
+			<div id="sortDelete">
+				<div id="sortForm">
+					<button id="sortColor" href="#">Sort</button>
+				</div>
+				<div id="deleteForm">
+					<button id="deleteMode" class="onOffButton">Delete</button>
+				</div>
+			</div>
+			<div id="listContainer">
+				<ul id="list">
+					<li class="red" id="li4">doctor appointment</li>
+					<li class="yellow" id="li3">walk dog</li>
+					<li class="green" id="li2">buy juice</li>
+					<li class="white" id="li1">paperwork</li>
+				</ul>
+			</diV>
+		</div>
+		<script src="js/jquery-1.11.3.js"></script>
+		<script src="js/todolist.js"></script>
+	</body>
+</html>

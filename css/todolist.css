@@ -52,8 +52,8 @@ li {
     user-select: none;
 }
 
-li.liDel {
-	opacity: 0.5;
+.liDel {
+	opacity: 0.8;
 }
 
 #controls, #wrapper {

@@ -15,27 +15,10 @@ $(function() {
 	//to create a new item
 	$colors.hide();	
 
-	function toggleDel() {
-		$('#deleteMode').toggleClass('on');
-		//adds css class for trash icon
-		if($('#deleteMode').hasClass('on')) {
-			$('li').each(function() {
-				$(this).addClass('liDel');
-			});
-		} else{
-			$('li').each(function() {
-				$(this).removeClass('liDel');
-			});
-		};
-	};
-
 	//when user focuses on the text box to start adding a new label, show
 	//the color selection div
 	$inputLabel.on('focus', function() {
 		$colors.show();
-		if($('#deleteMode').hasClass('on')) {
-			toggleDel();
-		};
 	});
 
 	//get the value of whichever button the user selects to apply to the 
@@ -76,7 +59,19 @@ $(function() {
 	//item and delete it. when delete mode is off, clicking on list items will
 	//change its color
 
-	$('#deleteMode').on('click', toggleDel);
+	$('#deleteMode').on('click', function() {
+		$(this).toggleClass('on');
+		//add css class for trash icon
+		if($('#deleteMode').hasClass('on')) {
+			$('li').each(function() {
+				$(this).addClass('liDel');
+			});
+		} else{
+			$('li').each(function() {
+				$(this).removeClass('liDel');
+			});
+		};
+	});
 
 	//changes color of list item or deletes it based on deleteMode on/off
 	$('ul').on('click', 'li', function() {
@@ -105,4 +100,5 @@ $(function() {
 			$(this).attr('class', colorWheel[i]);
 		};
 	});
+
 });

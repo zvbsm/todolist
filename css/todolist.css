@@ -52,6 +52,10 @@ li {
     user-select: none;
 }
 
+li.liDel {
+	opacity: 0.5;
+}
+
 #controls, #wrapper {
 	display: block;
 	margin: 0 auto;
@@ -78,10 +82,16 @@ button {
 	text-transform: uppercase;
 	color: #222;
 	text-shadow: 0 -1px 0 #666;
-	box-shadow: 2px 2px 4px #000;
 	border: 1px solid;
 	background-color: #ff6600;
-	background: linear-gradient(#ff6600, #b64c05);
+}
+
+button:hover {
+	box-shadow: 2px 2px 4px #000;
+}
+
+button.on {
+	background: #ffbb5b;
 }
 
 #addNew {

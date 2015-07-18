@@ -53,7 +53,6 @@ $(function() {
 		$inputLabel.attr('placeholder', 'Label it');
 	});
 
-	//delete button
 	//delete mode on or off determines if clicking on a list item will change
 	//its color or delete the item. when delete is on, a trash can icon will
 	//display on all listed items and clicking on it will animate the list
@@ -62,6 +61,16 @@ $(function() {
 
 	$('#deleteMode').on('click', function() {
 		$(this).toggleClass('on');
+		//add css class for trash icon
+		if($('#deleteMode').hasClass('on')) {
+			$('li').each(function() {
+				$(this).addClass('liDel');
+			});
+		} else{
+			$('li').each(function() {
+				$(this).removeClass('liDel');
+			});
+		};
 	});
 
 	//changes color of list item or deletes it based on deleteMode on/off

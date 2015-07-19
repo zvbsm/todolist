@@ -30,13 +30,74 @@ $(function() {
 		};
 	};
 
-	//decide which number class to apply to the new list item for sorting
-	//by color
-	function sortVal(a) {
-			 if(a === 'red') {return 1} 
-		else if(a === 'yellow') {return 2} 
-		else if(a === 'green') {return 3} 
-		else {return 4};
+	//sort list elements by class
+	function sortByColor() {
+		var ul = $('ul');
+		var lis = $('li');
+		var liLength = $('li').size();
+		var items = [];
+
+		for(i = 0; i < liLength; i++) {
+			var liObj = {};
+			liObj.txt = lis.eq(i).text();
+			liObj.idNum = lis.eq(i).attr('id');
+			liObj.color = lis.eq(i).attr('class');
+
+			if(liObj.color === 'red') {
+				liObj.order = 1;
+			}else if(liObj.color === 'yellow') {
+				liObj.order = 2;
+			}else if(liObj.color === 'green') {
+				liObj.order = 3;
+			}else {liObj.order = 4};
+
+			items.push(liObj);
+		};
+
+		items.sort(function(a,b) {
+			return a.order - b.order;
+		});
+
+		ul.empty();
+
+		$.each(items, function(i, value) {
+			ul.append('<li class="' + items[i].color + '" '
+				+ 'id="' + items[i].idNum + '">'
+				+ items[i].txt
+				+ '</li>');
+		});
+	};
+
+	//sort by ID
+	function sortById() {
+		var ul = $('ul');
+		var lis = $('li');
+		var liLength = $('li').size();
+		var items = [];
+
+		for(i = 0; i < liLength; i++) {
+			var liObj = {};
+			liObj.txt = lis.eq(i).text();
+			liObj.idNum = lis.eq(i).attr('id');
+			liObj.color = lis.eq(i).attr('class');
+
+			liObj.order = liObj.idNum.replace(/li/,'');
+			
+			items.push(liObj);
+		};
+
+		items.sort(function(a,b) {
+			return b.order - a.order;
+		});
+
+		ul.empty();
+
+		$.each(items, function(i, value) {
+			ul.append('<li class="' + items[i].color + '" '
+				+ 'id="' + items[i].idNum + '">'
+				+ items[i].txt
+				+ '</li>');
+		});
 	};
 
 	//when user focuses on the text box to start adding a new label, show
@@ -68,9 +129,12 @@ $(function() {
 			return;
 		};
 		$('#list').prepend('<li>' + newText + '</li>');
-		$('li:first').addClass(thisColor + ' ' + sortVal(thisColor))
+		$('li:first').addClass(thisColor)
 			.attr('id', 'li' + $('li').length);
 		
+		if($sortMode.hasClass('on')) {
+			sortByColor();
+		};
 //		.bind('selectstart', function(){ return false; });
 		//empty the content of variables used in this session for new items
 		//and hide the color selection div
@@ -120,11 +184,18 @@ $(function() {
 		};
 	});
 
-	//sort list items by color or by order they were created
+	//toggle sort mode between class or id
 	$sortMode.on('click', function() {
 		$colors.hide();
 		if($delMode.hasClass('on')) {
 			toggleDel();
+		};
+
+		$sortMode.toggleClass('on');
+		if($sortMode.hasClass('on')) {
+			sortByColor();
+		}else{
+			sortById();
 		};
 	});
 });

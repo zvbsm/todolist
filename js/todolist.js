@@ -30,7 +30,6 @@ $(function() {
 		};
 	};
 
-	//sort list elements by class
 	function sortByColor() {
 		var ul = $('ul');
 		var lis = $('li');
@@ -68,7 +67,6 @@ $(function() {
 		});
 	};
 
-	//sort by ID
 	function sortById() {
 		var ul = $('ul');
 		var lis = $('li');
@@ -136,8 +134,6 @@ $(function() {
 			sortByColor();
 		};
 //		.bind('selectstart', function(){ return false; });
-		//empty the content of variables used in this session for new items
-		//and hide the color selection div
 		$textInput.val('');
 		thisColor = 'white';
 		$colors.hide();
@@ -146,9 +142,7 @@ $(function() {
 	});
 
 	//delete mode on or off determines if clicking on a list item will change
-	//its color or delete the item. when delete is on, a trash can icon will
-	//display on all listed items and clicking on it will animate the list
-	//item and delete it. when delete mode is off, clicking on list items will
+	//its color or delete the item. when delete mode is off, clicking on list items will
 	//change its color
 
 	$delMode.on('click', function() {
@@ -156,7 +150,6 @@ $(function() {
 		toggleDel();
 	});
 
-	//changes color of list item or deletes it based on deleteMode on/off
 	$('ul').on('click', 'li', function() {
 
 		if($delMode.hasClass('on')) {

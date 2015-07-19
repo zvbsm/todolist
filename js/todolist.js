@@ -5,20 +5,47 @@ $(function() {
 	var $textInput = $('input:text');
 	//for changing placeholder value
 	var $inputLabel = $('#inputLabel');
+	var $delMode = $('#deleteMode');
+	var $sortMode = $('#sortMode');
 	//the color the user selects in the color selection div to apply to
 	//the item they are creating
 	var thisColor = 'white';
 	var colorWheel = ['red', 'yellow', 'green', 'white'];
 	var count;
 
-	//hide the color selector until user focuses on the text input
-	//to create a new item
+	//color selector when adding a new item
 	$colors.hide();	
+
+	function toggleDel() {
+		$delMode.toggleClass('on');
+		//adds css class for trash icon
+		if($delMode.hasClass('on')) {
+			$('li').each(function() {
+				$(this).addClass('liDel');
+			});
+		} else{
+			$('li').each(function() {
+				$(this).removeClass('liDel');
+			});
+		};
+	};
+
+	//decide which number class to apply to the new list item for sorting
+	//by color
+	function sortVal(a) {
+			 if(a === 'red') {return 1} 
+		else if(a === 'yellow') {return 2} 
+		else if(a === 'green') {return 3} 
+		else {return 4};
+	};
 
 	//when user focuses on the text box to start adding a new label, show
 	//the color selection div
 	$inputLabel.on('focus', function() {
 		$colors.show();
+		if($delMode.hasClass('on')) {
+			toggleDel();
+		};
 	});
 
 	//get the value of whichever button the user selects to apply to the 
@@ -40,9 +67,10 @@ $(function() {
 			$inputLabel.attr('placeholder', 'No text entered!');
 			return;
 		};
-		$('li:first').before('<li>' + newText + '</li>');
-		$('li:first').addClass(thisColor);
-		$('li:first').attr('id', 'li' + $('li').length);
+		$('#list').prepend('<li>' + newText + '</li>');
+		$('li:first').addClass(thisColor + ' ' + sortVal(thisColor))
+			.attr('id', 'li' + $('li').length);
+		
 //		.bind('selectstart', function(){ return false; });
 		//empty the content of variables used in this session for new items
 		//and hide the color selection div
@@ -59,24 +87,15 @@ $(function() {
 	//item and delete it. when delete mode is off, clicking on list items will
 	//change its color
 
-	$('#deleteMode').on('click', function() {
-		$(this).toggleClass('on');
-		//add css class for trash icon
-		if($('#deleteMode').hasClass('on')) {
-			$('li').each(function() {
-				$(this).addClass('liDel');
-			});
-		} else{
-			$('li').each(function() {
-				$(this).removeClass('liDel');
-			});
-		};
+	$delMode.on('click', function() {
+		$colors.hide();
+		toggleDel();
 	});
 
 	//changes color of list item or deletes it based on deleteMode on/off
 	$('ul').on('click', 'li', function() {
 
-		if($('#deleteMode').hasClass('on')) {
+		if($delMode.hasClass('on')) {
 			$(this).remove();
 			count = $('li').length;
 
@@ -101,4 +120,11 @@ $(function() {
 		};
 	});
 
+	//sort list items by color or by order they were created
+	$sortMode.on('click', function() {
+		$colors.hide();
+		if($delMode.hasClass('on')) {
+			toggleDel();
+		};
+	});
 });

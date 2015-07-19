@@ -52,8 +52,8 @@ li {
     user-select: none;
 }
 
-li.liDel {
-	opacity: 0.5;
+.liDel {
+	opacity: 0.8;
 }
 
 #controls, #wrapper {
@@ -121,7 +121,7 @@ div #sortDelete {
 	margin: 0 0 0 206px;
 	padding: 0;
 }
-#deleteMode, #sortColor {
+#deleteMode, #sortMode {
 	height: 30px;
 }
 

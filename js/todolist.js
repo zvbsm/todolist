@@ -11,7 +11,6 @@ $(function() {
 	//the item they are creating
 	var thisColor = 'white';
 	var colorWheel = ['red', 'yellow', 'green', 'white'];
-	var count;
 
 	//color selector when adding a new item
 	$colors.hide();	
@@ -30,44 +29,17 @@ $(function() {
 		};
 	};
 
-	function sortByColor() {
-		var ul = $('ul');
-		var lis = $('li');
-		var liLength = $('li').size();
-		var items = [];
+	function countList() {
+		var count = $('li').length;
 
-		for(i = 0; i < liLength; i++) {
-			var liObj = {};
-			liObj.txt = lis.eq(i).text();
-			liObj.idNum = lis.eq(i).attr('id');
-			liObj.color = lis.eq(i).attr('class');
-
-			if(liObj.color === 'red') {
-				liObj.order = 1;
-			}else if(liObj.color === 'yellow') {
-				liObj.order = 2;
-			}else if(liObj.color === 'green') {
-				liObj.order = 3;
-			}else {liObj.order = 4};
-
-			items.push(liObj);
-		};
-
-		items.sort(function(a,b) {
-			return a.order - b.order;
-		});
-
-		ul.empty();
-
-		$.each(items, function(i, value) {
-			ul.append('<li class="' + items[i].color + '" '
-				+ 'id="' + items[i].idNum + '">'
-				+ items[i].txt
-				+ '</li>');
+		//recount the list items and update their id attr
+		$('li').each(function() {
+			$(this).attr('id', 'li' + count);
+			count--;
 		});
 	};
 
-	function sortById() {
+	function sortMode() {
 		var ul = $('ul');
 		var lis = $('li');
 		var liLength = $('li').size();
@@ -79,13 +51,28 @@ $(function() {
 			liObj.idNum = lis.eq(i).attr('id');
 			liObj.color = lis.eq(i).attr('class');
 
-			liObj.order = liObj.idNum.replace(/li/,'');
-			
+			if($sortMode.hasClass('on')) {
+
+				if(liObj.color === 'red') {
+					liObj.order = 1;
+				}else if(liObj.color === 'yellow') {
+					liObj.order = 2;
+				}else if(liObj.color === 'green') {
+					liObj.order = 3;
+				}else {liObj.order = 4};
+			}else{
+				liObj.order = liObj.idNum.replace(/li/,'');
+			};
+
 			items.push(liObj);
 		};
 
 		items.sort(function(a,b) {
-			return b.order - a.order;
+			if($sortMode.hasClass('on')) {
+				return a.order - b.order;
+			}else{
+				return b.order - a.order;
+			};
 		});
 
 		ul.empty();
@@ -96,6 +83,9 @@ $(function() {
 				+ items[i].txt
 				+ '</li>');
 		});
+		if(!$sortMode.hasClass('on')) {
+			countList();
+		};
 	};
 
 	//when user focuses on the text box to start adding a new label, show
@@ -154,13 +144,10 @@ $(function() {
 
 		if($delMode.hasClass('on')) {
 			$(this).remove();
-			count = $('li').length;
 
-			//recount the list items and update their id attr
-			$('li').each(function() {
-				$(this).attr('id', 'li' + count);
-				count--;
-			});
+			if(!$sortMode.hasClass('on')) {
+				countList();
+			};
 
 		} else {
 			var i = 0;
@@ -185,10 +172,6 @@ $(function() {
 		};
 
 		$sortMode.toggleClass('on');
-		if($sortMode.hasClass('on')) {
-			sortByColor();
-		}else{
-			sortById();
-		};
+		sortMode();
 	});
 });
